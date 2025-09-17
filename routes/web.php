@@ -7,8 +7,8 @@ use App\Http\Controllers\backend\ModuleController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\ParametreController;
 use App\Http\Controllers\backend\PermissionController;
-
-
+use App\Http\Controllers\DemandeController;
+use App\Http\Controllers\MarketingController;
 
 Route::fallback(function () {
     return view('backend.utility.auth-404-basic');
@@ -35,7 +35,7 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
         route::get('maintenance-up', 'maintenanceUp')->name('parametre.maintenance-up');
         route::get('maintenance-down', 'maintenanceDown')->name('parametre.maintenance-down');
         route::get('optimize-clear', 'optimizeClear')->name('parametre.optimize-clear');
-         Route::get('download-backup/{file}', 'downloadBackup')->name('setting.download-backup');  // download backup db
+        Route::get('download-backup/{file}', 'downloadBackup')->name('setting.download-backup');  // download backup db
     });
 
 
@@ -75,3 +75,35 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
         route::get('delete/{id}', 'delete')->name('module.delete');
     });
 });
+
+// sms marketing
+Route::name('ticafrique.')->controller(MarketingController::class)->group(function () {
+    // index
+    Route::get('', 'index')->name('index');
+
+    // SMS
+    Route::get('/sms', 'sms')->name('sms');
+
+    // SMS 2Way
+    Route::get('/2way', 'way')->name('way');
+
+    // SMS Vocal
+    Route::get('/sms_voice', 'sms_voice')->name('sms_voice');
+
+    // Contact (formulaire)
+    Route::get('/contact', 'contact')->name('contact');
+
+    // Store contact (POST)
+    Route::post('/store_contact', 'store_contact')->name('store_contact');
+});
+
+// Demande de création de compte
+Route::name('ticafrique.')->controller(DemandeController::class)->group(
+    function () {
+        // demande
+        Route::get('/demande', 'demande')->name('demande');
+
+        // store demande
+        Route::post('/store_demande', 'store_demande')->name('store_demande');
+    }
+);
