@@ -26,10 +26,6 @@
                 <td style="padding: 8px; border: 1px solid #ddd;">{{ $user['email'] }}</td>
             </tr>
             <tr>
-                <td style="padding: 8px; border: 1px solid #ddd;"><strong>Identifiant</strong></td>
-                <td style="padding: 8px; border: 1px solid #ddd;">{{ $user['username'] }}</td>
-            </tr>
-            <tr>
                 <td style="padding: 8px; border: 1px solid #ddd;"><strong>Société</strong></td>
                 <td style="padding: 8px; border: 1px solid #ddd;">{{ $data['societe'] }}</td>
             </tr>

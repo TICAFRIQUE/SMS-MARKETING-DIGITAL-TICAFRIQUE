@@ -45,7 +45,7 @@
 <!-- Navbar Start -->
 <div class="container-fluid bg-dark-blue shadow-sm sticky-top">
     <div class="container">
-        <nav class="navbar navbar-dark navbar-expand-lg py-2">
+        <nav class="navbar navbar-dark navbar-expand-lg py-1">
 
             <!-- Logo -->
             <a href="{{ route('ticafrique.index') }}" class="navbar-brand d-flex align-items-center">

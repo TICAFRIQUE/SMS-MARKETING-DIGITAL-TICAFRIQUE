@@ -93,12 +93,12 @@ class DemandeController extends Controller
      */
     private function initMailer()
     {
-        $mail = new \PHPMailer\PHPMailer\PHPMailer(true);
+        $mail = new PHPMailer(true);
         $mail->isSMTP();
         $mail->Host       = 'mail.ticafrique.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = '_mainaccount@ticafrique.com';
-        $mail->Password   = env('SMTP_PASSWORD','Q!wg+wq@*#K6');
+        $mail->Password   = env('SMTP_PASSWORD', 'Q!wg+wq@*#K6');
         $mail->SMTPSecure = 'ssl';
         $mail->Port       = 465;
         $mail->CharSet    = 'UTF-8';

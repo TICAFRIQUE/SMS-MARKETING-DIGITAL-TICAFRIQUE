@@ -12,18 +12,39 @@
 
         <div class="card shadow-sm border-0 rounded-3">
             <div class="card-body p-4">
-                <!-- Message succès -->
+                <!-- ✅ Messages Flash -->
                 @if (session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                     </div>
-                @else
+                @endif
+
+                @if (session('error'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         {{ session('error') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
                     </div>
                 @endif
+
+                @if (session('echec'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('echec') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                    </div>
+                @endif
+
+                @if ($errors->any())
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+                    </div>
+                @endif
+                <!-- ✅ Fin messages -->
 
                 <form method="POST" action="{{ route('ticafrique.store_demande') }}" id="form">
                     @csrf
@@ -167,26 +188,14 @@
         let random2 = Math.floor(Math.random() * 5);
         let solution = random1 + random2;
         calcule.text(`${random1} + ${random2}`);
-        // modifier la valeur
-        let reback_ = $('#captchaSolution').val(solution)
+        $('#captchaSolution').val(solution)
 
-        // ID BOUTTON
-        //  $('#MsgErreur').hide();
-        let btnSubmit = $('#submit')
-        btnSubmit.click(function(e) {
-
-            //valeur user
+        $('#submit').click(function(e) {
             let userValeur = $('#captcha').val();
-
-            //condition
             if (parseInt(userValeur) != parseInt(solution)) {
                 e.preventDefault()
                 $('#MsgErreur').text('erreur');
             }
-
         })
-
-
-
     });
 </script>
