@@ -2,12 +2,25 @@
 <html lang="fr">
 
 <head>
+    <!-- Charset et viewport -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TICAFRIQUE | SMS MARKETING </title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- SEO -->
+    <title>@yield('title', 'TICAFRIQUE | SMS MARKETING')</title>
+    <meta name="description" content="@yield('description', 'Solutions TIC pour entreprises et organisations, spécialisées dans la performance et la communication numérique.')">
+    <meta name="keywords" content="@yield('keywords', 'TIC, Afrique, SMS Marketing, télécoms, solutions numériques, communication, entreprises')">
+    <meta name="author" content="http://ticafrique.ci">
+
+    <!-- Open Graph (partage réseaux sociaux) -->
+    <meta property="og:title" content="@yield('title', 'TICAFRIQUE | SMS MARKETING')">
+    <meta property="og:description" content="@yield('description', 'Solutions TIC pour entreprises et organisations, spécialisées dans la performance et la communication numérique.')">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('site/img/preview.jpg') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('site/img/favicon.ico') }}" type="image/x-icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +29,7 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Font Awesome (dernière version) -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
@@ -32,20 +45,10 @@
     <!-- Template Stylesheet -->
     <link href="{{ asset('site/css/style.css') }}" rel="stylesheet">
 
-    <!-- CSS AOS -->
+    <!-- AOS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-    <!-- JS AOS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            AOS.init({
-                duration: 1000, // durée de l’animation
-                once: true // animation seulement au premier scroll
-            });
-        });
-    </script>
 </head>
+
 
 
 <body>
@@ -97,6 +100,30 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('site/js/main.js') }}"></script>
+
+    <!-- jQuery (si utilisé par tes libs) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="{{ asset('site/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Owl Carousel -->
+    <script src="{{ asset('site/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+
+    <!-- AOS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            AOS.init({
+                duration: 1000, // durée de l’animation
+                once: true // animation seulement au premier scroll
+            });
+        });
+    </script>
+
+    <!-- Script principal -->
+    <script src="{{ asset('site/js/main.js') }}"></script>
+
 
 </body>
 
