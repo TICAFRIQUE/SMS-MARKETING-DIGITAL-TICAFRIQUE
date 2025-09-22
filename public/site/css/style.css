@@ -399,6 +399,18 @@
 
 /*** Carousel Start ***/
 
+.carousel-indicators [data-bs-target] {
+    width: 30px;
+    height: 8px;
+    border-radius: 20px;
+    background-color: #00b7ff;
+    margin: 5px;
+}
+
+.carousel-indicators .active {
+    background-color: #8e8e;
+}
+
 .carousel-item {
     position: relative;
 }
@@ -410,7 +422,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: none;
 }
 
 .carousel-caption {
