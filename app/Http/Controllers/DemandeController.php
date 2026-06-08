@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Demande;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\EmailService;
 use Illuminate\Routing\Controller;
-use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Session;
 
 
 class DemandeController extends Controller
@@ -24,10 +22,13 @@ class DemandeController extends Controller
         $this->emailService = $emailService;
     }
 
-    // demande de création de compte
+    // demande de devis
     public function demande()
     {
-        return view('fronts.sections.demande');
+        $captcha = rand(100000, 999999);
+        Session::put('demande_captcha', (string) $captcha);
+
+        return view('fronts.sections.demande', compact('captcha'));
     }
 
     // store demande
@@ -54,29 +55,47 @@ class DemandeController extends Controller
                 'email'          => 'nullable|email|max:255',
 
                 'complementaire' => 'nullable|string',
-                'captcha'          => 'required|string',
+                'captcha'        => 'required|string',
                 'validation'     => 'accepted',
             ]);
 
+            $submittedCaptcha = trim((string) $request->input('captcha'));
+            $expectedCaptcha = trim((string) Session::get('demande_captcha'));
+
+            if ($expectedCaptcha === '' || $submittedCaptcha !== $expectedCaptcha) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['captcha' => 'Le code de sécurité est incorrect.']);
+            }
+
             // Checkbox
             $validated['validation'] = true;
-            // Envoi mail
-            try {
 
+            try {
                 // Sauvegarde
                 $demande = Demande::create($validated);
 
                 $this->emailService->SendEmailToAdmin($demande);
+                Session::forget('demande_captcha');
             } catch (\Exception $e) {
-                Log::error('Erreur envoi mail demande : ' . $e->getMessage());
+                Log::error('Erreur enregistrement ou envoi mail demande : ' . $e->getMessage());
+
+                return back()
+                    ->withInput()
+                    ->with('error', 'Une erreur est survenue lors de la sauvegarde de la demande.');
             }
 
             return redirect()
                 ->back()
                 ->with('success', 'Votre demande a été envoyée avec succès !');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withInput()->withErrors($e->errors());
         } catch (\Exception $e) {
+            Log::error('Erreur générale store_demande : ' . $e->getMessage());
 
-            return $e->getMessage();
+            return back()
+                ->withInput()
+                ->with('error', 'Une erreur inattendue est survenue, veuillez réessayer.');
         }
     }
 }

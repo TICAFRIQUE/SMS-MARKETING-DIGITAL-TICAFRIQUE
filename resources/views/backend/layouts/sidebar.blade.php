@@ -82,7 +82,14 @@
                     </li>
                 @endcan
 
-
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link menu-link {{ Route::is('demandes.*') ? 'active' : '' }}"
+                            href="{{ route('demandes.index') }}">
+                            <i class="ri-inbox-fill"></i> <span>Demandes</span>
+                        </a>
+                    </li>
+                @endauth
 
 
                 @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'developpeur' || Auth::user()->can('voir-parametre'))

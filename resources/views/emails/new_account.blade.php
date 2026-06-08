@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Nouvelle demande de création de compte</title>
+    <title>Nouvelle demande de devis</title>
 </head>
 
 <body style="font-family: Arial, sans-serif; background-color: #f6f6f6; margin: 0; padding: 20px;">
     <div
         style="background-color: #ffffff; padding: 20px; border-radius: 8px; max-width: 700px; margin: auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
 
-        <h1 style="color: #333; text-align:center;">📢 Nouvelle demande de création de compte</h1>
+        <h1 style="color: #333; text-align:center;">📢 Nouvelle demande de devis</h1>
 
         <p style="line-height: 1.5; color: #555;">
             Un nouveau client vient de soumettre une demande. Voici les informations :

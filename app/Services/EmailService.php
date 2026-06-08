@@ -136,7 +136,7 @@ class EmailService
     {
         return $this->send(
             'info@ticafrique.com',
-            'Nouvelle demande de création de compte',
+            'Nouvelle demande de devis',
             'emails.new_account',
             ['data' => $demande]
         );

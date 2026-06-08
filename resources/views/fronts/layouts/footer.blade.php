@@ -124,7 +124,7 @@
                 </div>
                 <div class="contact-info-item">
                     <i class="bi bi-telephone"></i>
-                    <span>+225 00 00 00 00 00</span>
+                    <span>+225 25 22 00 20 77</span>
                 </div>
                 <div class="contact-info-item">
                     <i class="bi bi-envelope"></i>

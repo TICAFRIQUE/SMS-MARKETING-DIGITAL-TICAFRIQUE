@@ -1,6 +1,6 @@
 @extends('fronts.layouts.base')
 
-@section('title', 'Demande de création de compte | TicAfrique')
+@section('title', 'Demande de devis | TicAfrique')
 
 @section('content')
 
@@ -114,22 +114,28 @@
     .btn-next,
     .btn-prev,
     .btn-submit-final {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         padding: 12px 30px !important;
         border-radius: 8px !important;
         font-weight: 700 !important;
         text-transform: uppercase !important;
         letter-spacing: 1px !important;
+        min-width: 140px !important;
+        min-height: 44px !important;
+        cursor: pointer !important;
     }
 
     .btn-next {
-        background: var(--primary-blue) !important;
+        background: #0b3c5d !important;
         color: white !important;
         border: none !important;
     }
 
     .btn-prev {
-        background: #eee !important;
-        color: #666 !important;
+        background: #f0f0f0 !important;
+        color: #111 !important;
         border: none !important;
     }
 
@@ -137,6 +143,11 @@
         background: #28a745 !important;
         color: white !important;
         border: none !important;
+    }
+
+    .wizard-buttons button {
+        display: inline-flex !important;
+        visibility: visible !important;
     }
 
     /* Condition Sections */
@@ -153,7 +164,7 @@
                     <div class="card-body p-5">
 
                         <h2 class="text-center mb-5 fw-bold" style="color: var(--dark-blue);">
-                            Demande de Création de Compte
+                            Demande de devis
                         </h2>
 
                         {{-- SUCCESS --}}
@@ -161,6 +172,12 @@
                         <div class="alert alert-success border-0 shadow-sm rounded-4 mb-4">
                             <i class="fas fa-check-circle me-2"></i>
                             {{ session('success') }}
+                        </div>
+                        @endif
+                        @if(session()->has('error'))
+                        <div class="alert alert-danger border-0 shadow-sm rounded-4 mb-4">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            {{ session('error') }}
                         </div>
                         @endif
 
@@ -200,32 +217,32 @@
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Type de profil</label>
                                         <select name="societe" id="type_profil" class="form-select input-pro">
-                                            <option value="Personne Physique">Personne Physique</option>
-                                            <option value="Société">Société</option>
+                                            <option value="Personne Physique" {{ old('societe', 'Personne Physique') === 'Personne Physique' ? 'selected' : '' }}>Personne Physique</option>
+                                            <option value="Société" {{ old('societe') === 'Société' ? 'selected' : '' }}>Société</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Adresse</label>
-                                        <input type="text" name="adresse" class="form-control input-pro">
+                                        <input type="text" name="adresse" class="form-control input-pro" value="{{ old('adresse') }}">
                                     </div>
 
-                                    <div id="entreprise-fields" class="col-12 d-none">
+                                    <div id="entreprise-fields" class="col-12 {{ old('societe') === 'Société' ? '' : 'd-none' }}">
                                         <div class="row g-4">
                                             <div class="col-md-6">
                                                 <label class="form-label-pro">Nom de l'entreprise</label>
-                                                <input type="text" name="raisonsocial" class="form-control input-pro uppercase">
+                                                <input type="text" name="raisonsocial" class="form-control input-pro uppercase" value="{{ old('raisonsocial') }}">
                                             </div>
                                             <div class="col-md-6">
                                                 <label class="form-label-pro">RCCM</label>
-                                                <input type="text" name="rccm" class="form-control input-pro">
+                                                <input type="text" name="rccm" class="form-control input-pro" value="{{ old('rccm') }}">
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Ville</label>
-                                        <input type="text" name="ville" class="form-control input-pro uppercase">
+                                        <input type="text" name="ville" class="form-control input-pro uppercase" value="{{ old('ville') }}">
                                     </div>
 
                                     <div class="col-md-6">
@@ -240,22 +257,22 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Nom d’utilisateur</label>
-                                        <input type="text" name="username" class="form-control input-pro uppercase">
+                                        <input type="text" name="username" class="form-control input-pro uppercase" value="{{ old('username') }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Nom d’expéditeur</label>
-                                        <input type="text" name="expediteur" class="form-control input-pro uppercase" maxlength="11">
+                                        <input type="text" name="expediteur" class="form-control input-pro uppercase" maxlength="11" value="{{ old('expediteur') }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Nombre de sous-comptes</label>
-                                        <input type="number" name="nbcompte" class="form-control input-pro" value="0">
+                                        <input type="number" name="nbcompte" class="form-control input-pro" value="{{ old('nbcompte', 0) }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Montant (FCFA)</label>
-                                        <input type="number" name="montant" class="form-control input-pro" min="0">
+                                        <input type="number" name="montant" class="form-control input-pro" min="0" value="{{ old('montant') }}">
                                     </div>
                                 </div>
                             </section>
@@ -265,22 +282,22 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Nom complet</label>
-                                        <input type="text" name="nom" class="form-control input-pro uppercase">
+                                        <input type="text" name="nom" class="form-control input-pro uppercase" value="{{ old('nom') }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Fonction</label>
-                                        <input type="text" name="fonction" class="form-control input-pro uppercase">
+                                        <input type="text" name="fonction" class="form-control input-pro uppercase" value="{{ old('fonction') }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Téléphone</label>
-                                        <input type="tel" name="tel" class="form-control input-pro">
+                                        <input type="tel" name="tel" class="form-control input-pro" value="{{ old('tel') }}">
                                     </div>
 
                                     <div class="col-md-6">
                                         <label class="form-label-pro">Email professionnel</label>
-                                        <input type="email" name="email" class="form-control input-pro">
+                                        <input type="email" name="email" class="form-control input-pro" value="{{ old('email') }}">
                                     </div>
                                 </div>
                             </section>
@@ -289,25 +306,31 @@
                             <section class="wizard-section text-center">
                                 <div class="mb-4">
                                     <label class="form-label-pro">Informations complémentaires</label>
-                                    <textarea name="complementaire" rows="4" class="form-control input-pro"></textarea>
+                                    <textarea name="complementaire" rows="4" class="form-control input-pro">{{ old('complementaire') }}</textarea>
                                 </div>
 
                                 <div class="alert alert-info py-3 border-0">
-                                    <label class="fw-bold">
-                                        Code de sécurité : <span id="captcha"></span>
-                                    </label>
-                                    <input type="text" name="captcha" class="form-control d-inline-block ms-2" style="width:80px" required>
+                                    <div class="row g-2 align-items-center justify-content-center">
+                                        <div class="col-auto">
+                                            <label class="fw-bold mb-2 d-block">Code de sécurité</label>
+                                            <input type="text" id="captcha-code" class="form-control text-center" value="{{ $captcha ?? '' }}" readonly style="width:140px; font-weight:700; letter-spacing:0.2em;">
+                                        </div>
+                                        <div class="col-auto">
+                                            <label class="fw-bold mb-2 d-block invisible">Entrer</label>
+                                            <input type="text" name="captcha" class="form-control" style="width:140px;" placeholder="Saisir le code" required>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-check mt-3 text-start d-inline-block">
-                                    <input type="checkbox" name="validation" class="form-check-input" required>
+                                    <input type="checkbox" name="validation" class="form-check-input" required {{ old('validation') ? 'checked' : '' }}>
                                     <label class="form-check-label">
                                         J'accepte les conditions d'utilisation
                                     </label>
                                 </div>
 
                                 {{-- BOUTON SUBMIT  --}}
-                                <button type="submit" class="btn-submit-final mt-4 d-none" id="submitBtn">
+                                <button type="submit" class="btn-submit-final mt-4" id="submitBtn" style="display: none;">
                                     Soumettre la demande
                                 </button>
                             </section>
@@ -341,10 +364,10 @@
 
         if (n === sections.length - 1) {
             document.getElementById('nextBtn').style.display = 'none';
-            document.getElementById('submitBtn').classList.remove('d-none');
+            document.getElementById('submitBtn').style.display = 'inline-flex';
         } else {
-            document.getElementById('nextBtn').style.display = 'inline-block';
-            document.getElementById('submitBtn').classList.add('d-none');
+            document.getElementById('nextBtn').style.display = 'inline-flex';
+            document.getElementById('submitBtn').style.display = 'none';
         }
 
         steps.forEach((s, i) => {

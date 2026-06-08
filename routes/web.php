@@ -8,6 +8,7 @@ use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\ParametreController;
 use App\Http\Controllers\backend\PermissionController;
 use App\Http\Controllers\DemandeController;
+use App\Http\Controllers\backend\DemandeController as BackendDemandeController;
 use App\Http\Controllers\MarketingController;
 
 Route::fallback(function () {
@@ -73,6 +74,13 @@ Route::middleware(['admin'])->prefix('admin')->group(function () {
         route::post('store', 'store')->name('module.store');
         route::post('update/{id}', 'update')->name('module.update');
         route::get('delete/{id}', 'delete')->name('module.delete');
+    });
+
+    // demandes de devis
+    Route::prefix('demandes')->controller(BackendDemandeController::class)->group(function () {
+        Route::get('', 'index')->name('demandes.index');
+        Route::get('{demande}', 'show')->name('demandes.show');
+        Route::delete('{demande}', 'destroy')->name('demandes.destroy');
     });
 });
 
